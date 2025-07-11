@@ -1,6 +1,8 @@
 import { useRouter } from "next/navigation";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
+const TOKEN_KEY = 'token';
+const USER_ROLE_KEY = 'userRole';
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export const storeToken = (token: string): void => {
@@ -21,6 +23,21 @@ export const removeToken = (): void => {
     if (typeof window !== 'undefined') {
         localStorage.removeItem('token');
         console.log('Token removed from localStorage.');
+    }
+};
+
+export const getUserRole = (): string | null => {
+    if (typeof window != 'undefined') {
+            return localStorage.getItem('USER_ROLE_KEY');
+    }
+    return null;
+}
+
+export const removeAuthData = (): void => {
+    if (typeof window != 'undefined') {
+        localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(USER_ROLE_KEY);
+        console.log('Auth data removed from localStorage');
     }
 };
 
